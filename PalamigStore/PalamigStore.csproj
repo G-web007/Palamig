@@ -19,8 +19,4 @@
     <ProjectReference Include="..\PalamigStore.DataAccess\PalamigStore.DataAccess.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\images\" />
-  </ItemGroup>
-
 </Project>
