@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PalamigStore.Models;
 
 namespace PalamigStore.DataAccess.Data
 {
@@ -7,5 +8,7 @@ namespace PalamigStore.DataAccess.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
+
+        public DbSet<Category> Categories { get; set; }
     }
 }
