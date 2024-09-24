@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PalamigStore.Models\PalamigStore.Models.csproj" />
+    <ProjectReference Include="..\PalamigStore.Utility\PalamigStore.Utility.csproj" />
+  </ItemGroup>
+
 </Project>
