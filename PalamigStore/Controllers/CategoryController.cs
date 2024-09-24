@@ -15,7 +15,7 @@ namespace PalamigStore.Controllers
 
         public IActionResult Index()
         {
-            List<Category> categoryFromDb = _context.Categories.ToList();
+            List<Category> categoryFromDb = _context.Categories.OrderByDescending(c => c.Id).ToList();
             return View(categoryFromDb);
         }
 

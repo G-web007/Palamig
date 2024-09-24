@@ -11,6 +11,13 @@
     </div>
 </div>
 
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-warning text-center rounded">
+        <strong>No Data Available.</strong>
+    </div>
+}else
+{
 <table class="table table-bordered table-hover table-striped">
     <thead>
         <tr>
@@ -35,3 +42,4 @@
         }
     </tbody>
 </table>
+}
