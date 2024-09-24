@@ -3,8 +3,9 @@ using PalamigStore.DataAccess.Data;
 using PalamigStore.DataAccess.Repository.IRepository;
 using PalamigStore.Models;
 
-namespace PalamigStore.Controllers
+namespace PalamigStore.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _context;
@@ -52,7 +53,7 @@ namespace PalamigStore.Controllers
                 return NotFound();
             }
 
-            return View(categoryFromDb); 
+            return View(categoryFromDb);
         }
 
         [HttpPost]
@@ -101,10 +102,10 @@ namespace PalamigStore.Controllers
             return View(categoryFromDb);
         }
 
-        [HttpPost, ActionName("Delete")] 
+        [HttpPost, ActionName("Delete")]
         public IActionResult DeletePost(int? id)
         {
-            Category? CategoryIdFromDb = _context.Category.Get(c => c.Id == id); 
+            Category? CategoryIdFromDb = _context.Category.Get(c => c.Id == id);
             if (CategoryIdFromDb == null)
             {
                 return NotFound();
