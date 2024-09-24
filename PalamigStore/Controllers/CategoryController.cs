@@ -60,7 +60,7 @@ namespace PalamigStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                var existingCategory = _context.Get(c => c.Id == category.Id);
+                var existingCategory = _context.Category.Get(c => c.Id == category.Id);
 
                 if (existingCategory == null)
                 {
