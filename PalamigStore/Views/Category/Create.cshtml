@@ -8,6 +8,7 @@
     <div class="card rounded shadow mx-auto col-sm-12 col-md-12 col-lg-12 p-3">
         <div class="card-body">
             <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="mb-3">
                     <label asp-for="Name" class="form-label m-0"></label>
                     <input asp-for="Name" class="form-control">
@@ -28,3 +29,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

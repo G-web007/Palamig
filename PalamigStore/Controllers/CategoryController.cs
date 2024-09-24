@@ -27,9 +27,13 @@ namespace PalamigStore.Controllers
         [HttpPost]
         public IActionResult Create(Category category)
         {
-            _context.Categories.Add(category);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                _context.Categories.Add(category);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
         }
     }
 }
