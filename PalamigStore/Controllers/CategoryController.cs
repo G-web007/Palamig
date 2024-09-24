@@ -1,21 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PalamigStore.DataAccess.Data;
+using PalamigStore.DataAccess.Repository.IRepository;
 using PalamigStore.Models;
 
 namespace PalamigStore.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICategoryRepository _context;
 
-        public CategoryController(ApplicationDbContext context)
+        public CategoryController(ICategoryRepository context)
         {
             _context = context;
         }
 
         public IActionResult Index()
         {
-            List<Category> categoryFromDb = _context.Categories.OrderByDescending(c => c.Id).ToList();
+            List<Category> categoryFromDb = _context.GetAll().OrderByDescending(c => c.Id).ToList();
             return View(categoryFromDb);
         }
 
@@ -29,8 +30,8 @@ namespace PalamigStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Categories.Add(category);
-                _context.SaveChanges();
+                _context.Add(category);
+                _context.Save();
                 TempData["success"] = "Category created successfully";
                 return RedirectToAction(nameof(Index));
             }
@@ -44,7 +45,7 @@ namespace PalamigStore.Controllers
                 return NotFound();
             }
 
-            Category? categoryFromDb = _context.Categories.Find(id);
+            Category? categoryFromDb = _context.Get(c => c.Id == id);
 
             if (categoryFromDb == null)
             {
@@ -59,7 +60,7 @@ namespace PalamigStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                var existingCategory = _context.Categories.FirstOrDefault(c => c.Id == category.Id);
+                var existingCategory = _context.Get(c => c.Id == category.Id);
 
                 if (existingCategory == null)
                 {
@@ -75,7 +76,7 @@ namespace PalamigStore.Controllers
                 existingCategory.Name = category.Name;
                 existingCategory.Quantity = category.Quantity;
 
-                _context.SaveChanges();
+                _context.Save();
                 TempData["success"] = "Category updated successfully";
                 return RedirectToAction(nameof(Index));
             }
@@ -90,7 +91,7 @@ namespace PalamigStore.Controllers
                 return NotFound();
             }
 
-            Category? categoryFromDb = _context.Categories.Find(id);
+            Category? categoryFromDb = _context.Get(c => c.Id == id);
 
             if (categoryFromDb == null)
             {
@@ -103,14 +104,14 @@ namespace PalamigStore.Controllers
         [HttpPost, ActionName("Delete")] 
         public IActionResult DeletePost(int? id)
         {
-            Category? CategoryIdFromDb = _context.Categories.Find(id); 
+            Category? CategoryIdFromDb = _context.Get(c => c.Id == id); 
             if (CategoryIdFromDb == null)
             {
                 return NotFound();
             }
 
-            _context.Categories.Remove(CategoryIdFromDb);
-            _context.SaveChanges();
+            _context.Remove(CategoryIdFromDb);
+            _context.Save();
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction(nameof(Index));
         }
