@@ -1,3 +1,30 @@
-﻿body {
+﻿* {
+    box-sizing: border-box; /* Ensures padding and borders are included in width/height calculations */
+    margin: 0; /* Remove default margins */
+    padding: 0; /* Remove default paddings */
+}
 
+html {
+    height: 100%; /* Make sure html takes full height */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure body takes up at least 100% of viewport height */
+}
+
+main {
+    flex-grow: 1; /* Allow main content to grow and fill available space */
+}
+
+.footer {
+
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+}
+
+.navbar, .footer {
+    background: linear-gradient(to right, #FFA18B, #feb47b);
 }
