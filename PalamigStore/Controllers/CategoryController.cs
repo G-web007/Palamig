@@ -81,6 +81,37 @@ namespace PalamigStore.Controllers
             return View(category);
         }
 
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            Category? categoryFromDb = _context.Categories.Find(id);
+
+            if (categoryFromDb == null)
+            {
+                return NotFound();
+            }
+
+            return View(categoryFromDb);
+        }
+
+        [HttpPost, ActionName("Delete")] 
+        public IActionResult DeletePost(int? id)
+        {
+            Category? CategoryIdFromDb = _context.Categories.Find(id); 
+            if (CategoryIdFromDb == null)
+            {
+                return NotFound();
+            }
+
+            _context.Categories.Remove(CategoryIdFromDb);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
         private bool CategoryDetailsAreTheSame(Category existingCategory, Category category)
         {
             return existingCategory.Name == category.Name && existingCategory.Quantity == category.Quantity;
