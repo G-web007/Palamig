@@ -26,8 +26,17 @@
                         <li class="nav-item">
                             <a class="nav-link active" asp-action="Index" asp-controller="Home" asp-area="Customer">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="Index" asp-controller="Category" asp-area="Admin">Category</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Content Management
+                            </a>
+
+                            <ul class="dropdown-menu rounded">
+                                <li class="nav-item">
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -51,7 +60,7 @@
     <!-- Jquery -->
     <script src="~/lib/jquery/jquery.min.js"></script>
     <!-- Bootstrap Js -->
-    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Js -->
     <script src="~/js/script.js"></script>
 
