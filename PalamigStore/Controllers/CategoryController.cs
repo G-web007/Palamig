@@ -7,16 +7,16 @@ namespace PalamigStore.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _context;
+        private readonly IUnitOfWork _context;
 
-        public CategoryController(ICategoryRepository context)
+        public CategoryController(IUnitOfWork context)
         {
             _context = context;
         }
 
         public IActionResult Index()
         {
-            List<Category> categoryFromDb = _context.GetAll().OrderByDescending(c => c.Id).ToList();
+            List<Category> categoryFromDb = _context.Category.GetAll().OrderByDescending(c => c.Id).ToList();
             return View(categoryFromDb);
         }
 
@@ -30,7 +30,7 @@ namespace PalamigStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
+                _context.Category.Add(category);
                 _context.Save();
                 TempData["success"] = "Category created successfully";
                 return RedirectToAction(nameof(Index));
@@ -45,7 +45,7 @@ namespace PalamigStore.Controllers
                 return NotFound();
             }
 
-            Category? categoryFromDb = _context.Get(c => c.Id == id);
+            Category? categoryFromDb = _context.Category.Get(c => c.Id == id);
 
             if (categoryFromDb == null)
             {
@@ -91,7 +91,7 @@ namespace PalamigStore.Controllers
                 return NotFound();
             }
 
-            Category? categoryFromDb = _context.Get(c => c.Id == id);
+            Category? categoryFromDb = _context.Category.Get(c => c.Id == id);
 
             if (categoryFromDb == null)
             {
@@ -104,13 +104,13 @@ namespace PalamigStore.Controllers
         [HttpPost, ActionName("Delete")] 
         public IActionResult DeletePost(int? id)
         {
-            Category? CategoryIdFromDb = _context.Get(c => c.Id == id); 
+            Category? CategoryIdFromDb = _context.Category.Get(c => c.Id == id); 
             if (CategoryIdFromDb == null)
             {
                 return NotFound();
             }
 
-            _context.Remove(CategoryIdFromDb);
+            _context.Category.Remove(CategoryIdFromDb);
             _context.Save();
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction(nameof(Index));

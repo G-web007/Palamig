@@ -17,10 +17,5 @@ namespace PalamigStore.DataAccess.Repository
         {
             _context.Update(obj);
         }
-
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
     }
 }
