@@ -1,0 +1,24 @@
+﻿@if (TempData["success"] != null)
+{
+    <!-- Jquery -->
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <!-- toastr -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <!-- Javascript -->
+    <script type="text/javascript">
+        toastr.success('@TempData["success"]');
+
+    </script>
+}
+
+@if (TempData["error"] != null)
+{
+    <!-- Jquery -->
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <!-- toastr -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <!-- Javascript -->
+    <script type="text/javascript">
+        toastr.error('@TempData["error"]');
+    </script>
+}

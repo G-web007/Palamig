@@ -31,6 +31,7 @@ namespace PalamigStore.Controllers
             {
                 _context.Categories.Add(category);
                 _context.SaveChanges();
+                TempData["success"] = "Category created successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -75,6 +76,7 @@ namespace PalamigStore.Controllers
                 existingCategory.Quantity = category.Quantity;
 
                 _context.SaveChanges();
+                TempData["success"] = "Category updated successfully";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -109,6 +111,7 @@ namespace PalamigStore.Controllers
 
             _context.Categories.Remove(CategoryIdFromDb);
             _context.SaveChanges();
+            TempData["success"] = "Category deleted successfully";
             return RedirectToAction(nameof(Index));
         }
 
