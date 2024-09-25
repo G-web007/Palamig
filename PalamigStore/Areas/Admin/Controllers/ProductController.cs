@@ -18,5 +18,10 @@ namespace PalamigStore.Areas.Admin.Controllers
             List<Product> productsFromDb = _unitOfWork.Product.GetAll().OrderByDescending(p => p.Id).ToList();
             return View(productsFromDb);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
