@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PalamigStore.DataAccess.Repository.IRepository;
 using PalamigStore.Models;
 
@@ -60,7 +61,27 @@ namespace PalamigStore.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Update(obj);
+                var existingProduct = _unitOfWork.Product.Get(c => c.Id == obj.Id);
+
+                if (existingProduct == null)
+                {
+                    return NotFound();
+                }
+
+                if (ProductDetailsAreTheSame(existingProduct, obj))
+                {
+                    ModelState.AddModelError(string.Empty, " No updates were made.");
+                    return View(obj);
+                }
+
+                existingProduct.ProductName = obj.ProductName;
+                existingProduct.Description = obj.Description;
+                existingProduct.BrandName   = obj.BrandName;
+                existingProduct.ListPrice   = obj.ListPrice;
+                existingProduct.Price       = obj.Price;
+                existingProduct.Price50     = obj.Price50;
+                existingProduct.Price100    = obj.Price100;
+
                 _unitOfWork.Save();
                 TempData["success"] = "Product updated successfully";
                 return RedirectToAction(nameof(Index));
@@ -97,6 +118,11 @@ namespace PalamigStore.Areas.Admin.Controllers
 
             TempData["success"] = "Product deleted successfully";
             return RedirectToAction(nameof(Index));
+        }
+
+        private bool ProductDetailsAreTheSame(Product existingProduct, Product obj)
+        {
+            return existingProduct.ProductName == obj.ProductName && existingProduct.Description == obj.Description && existingProduct.BrandName == obj.BrandName && existingProduct.ListPrice == obj.ListPrice && existingProduct.Price == obj.Price && existingProduct.Price50 == obj.Price50 && existingProduct.Price100 == obj.Price100;
         }
     }
 }
