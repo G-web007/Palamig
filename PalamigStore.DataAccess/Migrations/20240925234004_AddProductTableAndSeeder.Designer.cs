@@ -11,7 +11,7 @@ using PalamigStore.DataAccess.Data;
 namespace PalamigStore.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240924082440_AddProductTableAndSeeder")]
+    [Migration("20240925234004_AddProductTableAndSeeder")]
     partial class AddProductTableAndSeeder
     {
         /// <inheritdoc />
@@ -103,7 +103,7 @@ namespace PalamigStore.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 7,
+                            Id = 1,
                             BrandName = "Magnolia",
                             Description = "Vanilla ice cream is a classic flavor commonly made with vanilla extract, cream, milk, and sugar.",
                             ListPrice = 200.0,
@@ -114,7 +114,7 @@ namespace PalamigStore.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = 8,
+                            Id = 2,
                             BrandName = "Nestle",
                             Description = "A delightful frozen treat bursting with refreshing orange flavor, perfect for satisfying sweet cravings on hot summer days.",
                             ListPrice = 150.0,
@@ -125,7 +125,7 @@ namespace PalamigStore.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = 9,
+                            Id = 3,
                             BrandName = "Baskin-Robbins",
                             Description = "A zesty and refreshing Italian-style dessert made from freshly squeezed lemons, creating a tangy yet cooling sensation that tantalizes the taste buds with every spoonful.",
                             ListPrice = 60.0,
@@ -136,7 +136,7 @@ namespace PalamigStore.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = 10,
+                            Id = 4,
                             BrandName = "Magnolia",
                             Description = "Indulge in creamy decadence with our Chocolate Ice Cream, a rich and velvety delight crafted from the finest cocoa, offering a blissful symphony of intense chocolate flavors in every scoop.",
                             ListPrice = 200.0,
@@ -147,7 +147,7 @@ namespace PalamigStore.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = 14,
+                            Id = 5,
                             BrandName = "Nestle",
                             Description = "Savor the sweetness of summer with our Grape Popsicle, a burst of fruity goodness that captures the essence of ripe grapes, delivering a refreshing and satisfying treat on a stick.",
                             ListPrice = 150.0,
@@ -158,7 +158,7 @@ namespace PalamigStore.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = 11,
+                            Id = 6,
                             BrandName = "Baskin-Robbins",
                             Description = "Treat yourself to a taste of Italy with our Coffee Granita, a sophisticated dessert blending robust espresso with a hint of sweetness, offering a revitalizing and indulgent pick-me-up in every icy spoonful.",
                             ListPrice = 60.0,
