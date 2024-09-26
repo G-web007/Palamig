@@ -73,39 +73,57 @@ namespace PalamigStore.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return View(ProductFromDb);
+            ProductVM productVM = new ProductVM
+            {
+                CategoryList = _unitOfWork.Category.GetAll().Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                }),
+
+                Product = ProductFromDb
+            };
+
+            return View(productVM);
         }
 
         [HttpPost]
-        public IActionResult Edit(Product obj)
+        public IActionResult Edit(ProductVM obj)
         {
             if (ModelState.IsValid)
             {
-                var existingProduct = _unitOfWork.Product.Get(c => c.Id == obj.Id);
+                var existingProduct = _unitOfWork.Product.Get(c => c.Id == obj.Product.Id);
 
                 if (existingProduct == null)
                 {
                     return NotFound();
                 }
 
-                if (ProductDetailsAreTheSame(existingProduct, obj))
+                if (ProductDetailsAreTheSame(existingProduct, obj.Product))
                 {
                     ModelState.AddModelError(string.Empty, " No updates were made.");
                     return View(obj);
                 }
 
-                existingProduct.ProductName = obj.ProductName;
-                existingProduct.Description = obj.Description;
-                existingProduct.BrandName   = obj.BrandName;
-                existingProduct.ListPrice   = obj.ListPrice;
-                existingProduct.Price       = obj.Price;
-                existingProduct.Price50     = obj.Price50;
-                existingProduct.Price100    = obj.Price100;
+                existingProduct.ProductName = obj.Product.ProductName;
+                existingProduct.Description = obj.Product.Description;
+                existingProduct.BrandName   = obj.Product.BrandName;
+                existingProduct.ListPrice   = obj.Product.ListPrice;
+                existingProduct.Price       = obj.Product.Price;
+                existingProduct.Price50     = obj.Product.Price50;
+                existingProduct.Price100    = obj.Product.Price100;
+
 
                 _unitOfWork.Save();
                 TempData["success"] = "Product updated successfully";
                 return RedirectToAction(nameof(Index));
             }
+
+            obj.CategoryList = _unitOfWork.Category.GetAll().Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString()
+            });
 
             return View(obj);
         }

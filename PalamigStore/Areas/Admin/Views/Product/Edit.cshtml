@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model ProductVM
 
 <div class="container py-5">
     <div class="card-title">
@@ -9,33 +9,34 @@
         <div class="card-body">
             <form method="post">
                 <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" asp-for="Product.Id" />
                 <div class="mb-3">
-                    <label asp-for="ProductName" class="form-label m-0"></label>
-                    <input asp-for="ProductName" class="form-control">
+                    <label asp-for="Product.ProductName" class="form-label m-0"></label>
+                    <input asp-for="Product.ProductName" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label asp-for="Description" class="form-label m-0"></label>
-                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <label asp-for="Product.Description" class="form-label m-0"></label>
+                    <textarea asp-for="Product.Description" class="form-control"></textarea>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="BrandName" class="form-label m-0"></label>
-                    <input asp-for="BrandName" class="form-control">
+                    <label asp-for="Product.BrandName" class="form-label m-0"></label>
+                    <input asp-for="Product.BrandName" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label asp-for="ListPrice" class="form-label m-0"></label>
-                    <input asp-for="ListPrice" class="form-control">
+                    <label asp-for="Product.ListPrice" class="form-label m-0"></label>
+                    <input asp-for="Product.ListPrice" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label asp-for="Price" class="form-label m-0"></label>
-                    <input asp-for="Price" class="form-control">
+                    <label asp-for="Product.Price" class="form-label m-0"></label>
+                    <input asp-for="Product.Price" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label asp-for="Price50" class="form-label m-0"></label>
-                    <input asp-for="Price50" class="form-control">
+                    <label asp-for="Product.Price50" class="form-label m-0"></label>
+                    <input asp-for="Product.Price50" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label asp-for="Price100" class="form-label m-0"></label>
-                    <input asp-for="Price100" class="form-control">
+                    <label asp-for="Product.Price100" class="form-label m-0"></label>
+                    <input asp-for="Product.Price100" class="form-control">
                 </div>
                 <div class="row">
                     <div class="col-6 col-md-6 col-lg-6 col-sm-6">
