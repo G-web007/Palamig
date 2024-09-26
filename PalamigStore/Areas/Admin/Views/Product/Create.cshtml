@@ -15,7 +15,7 @@
                 </div>
                 <div class="mb-3">
                     <label asp-for="Product.Description" class="form-label m-0"></label>
-                    <input asp-for="Product.Description" class="form-control">
+                    <textarea asp-for="Product.Description" class="form-control"></textarea>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Product.BrandName" class="form-label m-0"></label>
@@ -57,5 +57,7 @@
 </div>
 
 @section Scripts {
+
+    <!-- Validation -->
     <partial name="_ValidationScriptsPartial" />
 }
