@@ -36,9 +36,14 @@ namespace PalamigStore.Models
         [Display(Name = "Price for 100 +")]
         public double Price100 { get; set; }
 
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         [ValidateNever]
         public Category Category { get; set; }
+
+        [ValidateNever]
+        [Display(Name = "Image")]
+        public string ImageUrl { get; set; } = string.Empty;
     }
 }

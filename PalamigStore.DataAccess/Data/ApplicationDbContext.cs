@@ -31,7 +31,8 @@ namespace PalamigStore.DataAccess.Data
                     Price = 230,
                     Price50 = 11500,
                     Price100 = 20000,
-                    CategoryId = 7
+                    CategoryId = 7,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -43,7 +44,8 @@ namespace PalamigStore.DataAccess.Data
                     Price = 125,
                     Price50 = 6250,
                     Price100 = 125000,
-                    CategoryId = 8
+                    CategoryId = 8,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -55,7 +57,8 @@ namespace PalamigStore.DataAccess.Data
                     Price = 45,
                     Price50 = 2250,
                     Price100 = 45000,
-                    CategoryId = 9
+                    CategoryId = 9,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -67,7 +70,8 @@ namespace PalamigStore.DataAccess.Data
                     Price = 230,
                     Price50 = 11500,
                     Price100 = 20000,
-                    CategoryId = 10
+                    CategoryId = 10,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -79,7 +83,8 @@ namespace PalamigStore.DataAccess.Data
                     Price = 125,
                     Price50 = 6250,
                     Price100 = 125000,
-                    CategoryId = 7
+                    CategoryId = 7,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -91,7 +96,8 @@ namespace PalamigStore.DataAccess.Data
                     Price = 45,
                     Price50 = 2250,
                     Price100 = 45000,
-                    CategoryId = 14
+                    CategoryId = 14,
+                    ImageUrl = ""
                 }
             );
         }
