@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PalamigStore.DataAccess.Repository.IRepository;
 using PalamigStore.Models;
+using PalamigStore.Models.ViewModels;
 
 namespace PalamigStore.Areas.Admin.Controllers
 {
@@ -22,21 +24,39 @@ namespace PalamigStore.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            ProductVM productVM = new ProductVM
+            {
+                CategoryList = _unitOfWork.Category.GetAll().Select(c => new SelectListItem 
+                { 
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                }),
+
+                Product = new Product()
+            };
+            return View(productVM);
         }
 
         [HttpPost]
-        public IActionResult Create(Product product)
+        public IActionResult Create(ProductVM productVM)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(product);
+                _unitOfWork.Product.Add(productVM.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction(nameof(Index));
             }
+            else
+            {
+                productVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
 
-            return View();
+                return View(productVM);
+            }
         }
 
         public IActionResult Edit(int? id)
