@@ -7,9 +7,14 @@
     <hr class="p-3" />
     <div class="card rounded shadow mx-auto col-sm-12 col-md-12s col-lg-12 p-3">
         <div class="card-body">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <input type="hidden" asp-for="Product.Id" />
+                <input asp-for="Product.ImageUrl" hidden />
+                <div class="mb-3">
+                    <img src="@Model.Product.ImageUrl" width="100%" class="border shadow rounded" />
+                </div>
+                <hr>
                 <div class="mb-3">
                     <label asp-for="Product.ProductName" class="form-label m-0"></label>
                     <input asp-for="Product.ProductName" class="form-control">
@@ -37,6 +42,16 @@
                 <div class="mb-3">
                     <label asp-for="Product.Price100" class="form-label m-0"></label>
                     <input asp-for="Product.Price100" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Product.ImageUrl" class="form-label m-0"></label>
+                    <input type="file" name="file" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Product.CategoryId" class="form-label m-0"></label>
+                    <select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-select border-0">
+                        <option disabled selected>--Select Category--</option>
+                    </select>
                 </div>
                 <div class="row">
                     <div class="col-6 col-md-6 col-lg-6 col-sm-6">

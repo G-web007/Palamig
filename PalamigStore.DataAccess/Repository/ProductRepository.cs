@@ -15,7 +15,20 @@ namespace PalamigStore.DataAccess.Repository
 
         public void Update(Product obj)
         {
-            _context.Products.Update(obj);
+            var objFromDb = _context.Products.FirstOrDefault(u => u.Id == obj.Id);
+
+            if (objFromDb != null)
+            {
+                objFromDb.ProductName   = obj.ProductName;
+                objFromDb.Description   = obj.Description;
+                objFromDb.BrandName     = obj.BrandName;
+                objFromDb.ListPrice     = obj.ListPrice;
+                objFromDb.Price         = obj.Price;
+                objFromDb.Price50       = obj.Price50;
+                objFromDb.Price100      = obj.Price100;
+                objFromDb.ImageUrl      = obj.ImageUrl;
+                objFromDb.CategoryId    = obj.CategoryId;
+            }
         }
     }
 }

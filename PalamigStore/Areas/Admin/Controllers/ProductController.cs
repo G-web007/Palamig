@@ -116,44 +116,73 @@ namespace PalamigStore.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(ProductVM obj)
+        public IActionResult Edit(ProductVM obj, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
-                var existingProduct = _unitOfWork.Product.Get(c => c.Id == obj.Product.Id);
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+                if (file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                 
+                    string productPath = Path.Combine(wwwRootPath, @"images\Product");
+
+                    if (!string.IsNullOrEmpty(obj.Product.ImageUrl)) 
+                    {
+                        var oldImagePath = Path.Combine(wwwRootPath, obj.Product.ImageUrl.TrimStart('/')); 
+
+                        if (System.IO.File.Exists(oldImagePath)) 
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    obj.Product.ImageUrl = @"\images\Product\" + fileName;
+                }
+
+                var existingProduct = _unitOfWork.Product.Get(p => p.Id == obj.Product.Id);
 
                 if (existingProduct == null)
                 {
                     return NotFound();
                 }
-
-                if (ProductDetailsAreTheSame(existingProduct, obj.Product))
+                
+                if (ProductDetailsAreTheSame(existingProduct, obj))
                 {
-                    ModelState.AddModelError(string.Empty, " No updates were made.");
+                    ModelState.AddModelError(string.Empty, " No updates made.");
+
+                    obj.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                    {
+                        Text = u.Name,
+                        Value = u.Id.ToString()
+                    }).ToList();
+
                     return View(obj);
                 }
 
-                existingProduct.ProductName = obj.Product.ProductName;
-                existingProduct.Description = obj.Product.Description;
-                existingProduct.BrandName   = obj.Product.BrandName;
-                existingProduct.ListPrice   = obj.Product.ListPrice;
-                existingProduct.Price       = obj.Product.Price;
-                existingProduct.Price50     = obj.Product.Price50;
-                existingProduct.Price100    = obj.Product.Price100;
-
-
+                _unitOfWork.Product.Update(obj.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product updated successfully";
                 return RedirectToAction(nameof(Index));
+
             }
-
-            obj.CategoryList = _unitOfWork.Category.GetAll().Select(c => new SelectListItem
+            else
             {
-                Text = c.Name,
-                Value = c.Id.ToString()
-            });
+                // If ModelState is not valid, return the view with the original productVM
+                obj.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
 
-            return View(obj);
+                return View(obj);
+            }
         }
 
         public IActionResult Delete(int? id)
@@ -186,9 +215,17 @@ namespace PalamigStore.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductDetailsAreTheSame(Product existingProduct, Product obj)
+        private bool ProductDetailsAreTheSame(Product existingProduct, ProductVM productVM)
         {
-            return existingProduct.ProductName == obj.ProductName && existingProduct.Description == obj.Description && existingProduct.BrandName == obj.BrandName && existingProduct.ListPrice == obj.ListPrice && existingProduct.Price == obj.Price && existingProduct.Price50 == obj.Price50 && existingProduct.Price100 == obj.Price100;
+            return existingProduct.ProductName == productVM.Product.ProductName &&
+                   existingProduct.Description == productVM.Product.Description &&
+                   existingProduct.BrandName   == productVM.Product.BrandName &&
+                   existingProduct.ListPrice   == productVM.Product.ListPrice &&
+                   existingProduct.Price       == productVM.Product.Price &&
+                   existingProduct.Price50     == productVM.Product.Price50 &&
+                   existingProduct.Price100    == productVM.Product.Price100 &&
+                   existingProduct.ImageUrl    == productVM.Product.ImageUrl &&
+                   existingProduct.CategoryId  == productVM.Product.CategoryId;
         }
     }
 }
